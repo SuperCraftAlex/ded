@@ -1,0 +1,53 @@
+extensions:
+    kt
+    kts
+
+tokens:
+    paren open: "(
+    paren close: ")
+    curly open: "{
+    curly close: "}
+    comment: "//
+
+keywords:
+    abstract
+    break
+    catch
+    class
+    const
+    continue
+    else
+    enum
+    is
+    as
+    when
+    val
+    var
+    for
+    if
+    import
+    interface
+    data
+    value
+    internal
+    inline
+    external
+    inner
+    package
+    private
+    protected
+    return
+    super
+    when
+    this
+    throw
+    try
+    while
+    sealed
+    open
+    true
+    false
+    null
+    fun"
+    typealias
+    in

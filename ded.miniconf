@@ -46,7 +46,7 @@ editor:
         background: xE7E7E7FF
         input:
             hint:
-                color:   x5B5B5BFF
+                color:   x818181FF
                 fmt:     "({hint})
                 spacing: 20.0
             content:
@@ -57,9 +57,14 @@ editor:
             color: x181818FF
     tokens:
         preprocessor directive: x95A99FFF
-        keyword: xFFDD33FF
-        comment: xCC8C3CFF
-        string:  x73C936FF
+        keyword:                xFFDD33FF
+        comment:                xCC8C3CFF
+        string:                 x73C936FF
+        open paren:             x818181FF
+        close paren:            x818181FF
+        open curly:             x818181FF
+        close curly:            x818181FF
+        semicolon:              x818181FF
     cursor:
         blink:
             treshold: 500

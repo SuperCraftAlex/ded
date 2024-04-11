@@ -11,60 +11,6 @@ typedef struct {
     const char *text;
 } Literal_Token;
 
-Literal_Token literal_tokens[] = {
-    {.text = "(", .kind = TOKEN_OPEN_PAREN},
-    {.text = ")", .kind = TOKEN_CLOSE_PAREN},
-    {.text = "{", .kind = TOKEN_OPEN_CURLY},
-    {.text = "}", .kind = TOKEN_CLOSE_CURLY},
-    {.text = ";", .kind = TOKEN_SEMICOLON},
-};
-#define literal_tokens_count (sizeof(literal_tokens)/sizeof(literal_tokens[0]))
-
-const char *jKeywords[] = {
-    "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class",
-    "const", "continue", "default", "do", "double", "else", "enum", "extends", "final",
-    "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int",
-    "interface", "long", "native", "new", "package", "private", "protected", "public",
-    "return", "short", "static", "super", "switch", "synchronized", "this", "throw",
-    "throws", "transient", "try", "void", "volatile", "while", "non-sealed", "open",
-    "opens", "permits", "provides", "record", "sealed", "to", "transitive", "uses", "var",
-    "with", "yield", "true", "false", "null", "const", "goto", "strictfp",
-};
-#define jKeywords_count (sizeof(jKeywords)/sizeof(jKeywords[0]))
-
-const char *ktKeywords[] = {
-    "abstract", "break", "catch", "class", "const", "continue", "else", "enum", "is", "as",
-    "when", "val", "var", "for", "if", "import", "interface", "data", "external", "inner",
-    "package", "private", "protected", "return", "super", "when",  "this", "throw",
-    "try", "while", "sealed", "open", "true", "false", "null", "fun", "typealias", "in",
-};
-#define ktKeywords_count (sizeof(ktKeywords)/sizeof(ktKeywords[0]))
-
-const char *cKeywords[] = {
-    "auto", "break", "case", "char", "const", "continue", "default", "do", "double",
-    "else", "enum", "extern", "float", "for", "goto", "if", "int", "long", "register",
-    "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef",
-    "union", "unsigned", "void", "volatile", "while", "alignas", "alignof", "and",
-    "and_eq", "asm", "atomic_cancel", "atomic_commit", "atomic_noexcept", "bitand",
-    "bitor", "bool", "catch", "char16_t", "char32_t", "char8_t", "class", "co_await",
-    "co_return", "co_yield", "compl", "concept", "const_cast", "consteval", "constexpr",
-    "constinit", "decltype", "delete", "dynamic_cast", "explicit", "export", "false",
-    "friend", "inline", "mutable", "namespace", "new", "noexcept", "not", "not_eq",
-    "nullptr", "operator", "or", "or_eq", "private", "protected", "public", "reflexpr",
-    "reinterpret_cast", "requires", "static_assert", "static_cast", "synchronized",
-    "template", "this", "thread_local", "throw", "true", "try", "typeid", "typename",
-    "using", "virtual", "wchar_t", "xor", "xor_eq",
-};
-#define cKeywords_count (sizeof(cKeywords)/sizeof(cKeywords[0]))
-
-const char *pyKeywords[] = {
-    "False", "None", "True", "and", "as", "assert", "async", "await", "break", "class",
-    "continue", "def", "del", "elif", "else", "except", "finally", "for", "from", "global",
-    "if", "import", "in", "is", "lambda", "nonlocal", "not", "or", "pass", "raise",
-    "return", "try", "while", "with", "yield",
-};
-#define pyKeywords_count (sizeof(pyKeywords)/sizeof(pyKeywords[0]))
-
 const char *token_kind_name[TOKEN_KIND_SIZE] = {
     [TOKEN_END] = "end of content",
     [TOKEN_INVALID] = "invalid token",
@@ -102,6 +48,8 @@ Lexer lexer_new(Free_Glyph_Atlas *atlas, const char *content, size_t content_len
                 l.file_ext = FEXT_PYTHON;
             } else if (strcmp(file_ext_str, "java") == 0) {
                 l.file_ext = FEXT_JAVA;
+            } else if (strcmp(file_ext_str, "miniconf") == 0) {
+                l.file_ext = FEXT_MINICONF;
             }
         }
     }
@@ -120,6 +68,8 @@ const char *file_ext_str(File_Extension ext)
             return "C++";
         case FEXT_PYTHON:
             return "Python";
+        case FEXT_MINICONF:
+            return "MiniConf";
         default:
             return "?";
     }
@@ -270,6 +220,11 @@ Token lexer_next(Lexer *l)
             case FEXT_PYTHON:
                 keywords = pyKeywords;
                 keywords_count = pyKeywords_count;
+            break;
+
+            case FEXT_MINICONF:
+                keywords = miniconfKeywords;
+                keywords_count = miniconfKeywords_count;
             break;
 
             default:

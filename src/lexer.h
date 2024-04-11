@@ -11,6 +11,7 @@ typedef enum {
     FEXT_JAVA,
     FEXT_CPP,
     FEXT_PYTHON,
+    FEXT_MINICONF,
 } File_Extension;
 
 typedef enum {
